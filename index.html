@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HKU Course Weaver</title>
+<meta name="description" content="Check whether a course plan is actually possible before you enrol: prerequisite chains, co-requisites, clashes and credit load, each traced to the public page it came from.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./"><img src="assets/logo.svg" alt="" width="32" height="32">HKU Course Weaver</a>
+    <nav><a href="#does">What it does</a><a href="#refuses">What it refuses</a><a href="#data">Data</a><a href="#run">Run it</a></nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <h1>Is this course plan actually possible?</h1>
+    <p class="lede">
+      You type the courses you want and the courses you have taken. HKU Course Weaver answers with
+      what is missing, what will clash, and which terms could work &mdash; and shows the public page
+      each rule came from, so you can check it yourself.
+    </p>
+    <p class="meta">
+      A course project for AILT9019 (AI Literacy II), University of Hong Kong. The working system is a
+      local Java service; this page documents it and the demo video shows it running.
+    </p>
+  </section>
+
+  <section id="does">
+    <h2>What it does</h2>
+    <div class="grid">
+      <article>
+        <h3>Follows the whole chain</h3>
+        <p>A prerequisite of a prerequisite still counts. The tool walks the graph both ways, so
+        "can I take FINA3353 next year" turns into the four courses that have to happen first.</p>
+      </article>
+      <article>
+        <h3>Distinguishes "cannot check" from "no problem"</h3>
+        <p>If a rule names a course outside the curated dataset, the answer says it cannot be
+        verified rather than silently passing it. Same for an in-progress course against a
+        minimum grade: the answer is an assumption, and it is labelled as one.</p>
+      </article>
+      <article>
+        <h3>Offers options without ranking them</h3>
+        <p>Feasible term-by-term plans are printed in chronological order. The ordering carries no
+        preference: choosing between them is the student's job, not the tool's.</p>
+      </article>
+    </div>
+
+    <figure>
+      <img src="assets/app.png" alt="The input panel: course codes, self-reported records, and the declared programme length.">
+      <figcaption>Input panel. The name is the fixed sample used for screenshots; nothing is stored
+      in the browser.</figcaption>
+    </figure>
+
+    <p>Command-line output for the same question, with a refusal at the end:</p>
+    <pre><code>Course FINA3353 - Regulatory, operational and valuation issues in finance institutions (6.0 credits)
+  Prerequisites / dependency chain (upstream):
+    FINA2320 -&gt; FINA3353  [Investments and portfolio analysis; pass required]
+
+=== Constraint check ===
+  Blocked points:
+    FINA3353 needs FINA2320 [pass, verified=true] - no record of FINA2320; complete it before FINA3353
+  Soft warnings (non-blocking):
+    [LONG_CHAIN/soft] Long dependency chain of 4 courses (ACCT1101 -&gt; FINA1310 -&gt; FINA2320 -&gt; FINA3353) ...
+  Feasible options (ordering carries no preference):
+    Y1S1: ACCT1101, ECON1210
+    Y1S2: FINA1310
+    Y2S1: FINA2320
+    Y3S1: FINA3353</code></pre>
+  </section>
+
+  <section id="refuses">
+    <h2>What it refuses to do</h2>
+    <p>These are product boundaries, not missing features:</p>
+    <ul class="checks">
+      <li>No recommendation of which course to take, and no ranking of courses.</li>
+      <li>No decision about whether you can graduate, and no official academic decision of any kind.</li>
+      <li>No comparison of unrelated or parallel courses for credit or timetable conflicts.</li>
+      <li>No SIS or Portal login, and no reading of personal academic records. What you type is all it knows.</li>
+      <li>No personal data sent to a model: the optional language-model parser sees public course text only.</li>
+      <li>Wording follows the evidence: "extremely high risk of delay", never "you will be delayed".</li>
+    </ul>
+  </section>
+
+  <section id="data">
+    <h2>Where the data comes from</h2>
+    <p>Every record carries the public URL it was read from and the date it was read; the repository
+    ships that manifest, so a reviewer can re-open the page and compare. Nothing here is scraped from
+    a source that requires permission.</p>
+    <div class="table">
+      <table>
+        <thead><tr><th>What</th><th>Public source</th></tr></thead>
+        <tbody>
+          <tr><td>Course descriptions, prerequisites, co-requisites, exclusions</td><td>Faculty of Business and Economics course descriptions 2026-27 (PDF); Faculty of Science course pages</td></tr>
+          <tr><td>Class times and sections</td><td>Faculty of Engineering BEng Year-1 timetable (PDF, 2023-24) &mdash; the only public document found that prints class letters</td></tr>
+          <tr><td>Programme requirements</td><td>BEng in Mechanical Engineering syllabus 2025-26 (PDF)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="limits">
+    <h2>What is not finished</h2>
+    <ul class="checks">
+      <li><strong>73 courses</strong>, not the whole catalogue: a curated subset covering common FBE,
+      Science and Engineering courses.</li>
+      <li><strong>The timetable is 2023-24.</strong> Class times for 2026-27 are not published in a form
+      that names sections, so the page says which year it is looking at.</li>
+      <li><strong>Twelve courses are withheld.</strong> Their printed prerequisite mixes "and", "or" and
+      "or equivalent" in a way the data model cannot state exactly; shipping them would over-claim.</li>
+      <li><strong>One programme</strong> (BEng in Mechanical Engineering). Its elective lists are
+      alternatives, so most of its course slots do not resolve to a catalogue record yet.</li>
+      <li>Summer-term and exchange-student section codes are not modelled: no public page shows one,
+      and the tool says so instead of guessing.</li>
+    </ul>
+  </section>
+
+  <section id="run">
+    <h2>Run it yourself</h2>
+    <p>Java 21 or newer and Maven. The repository is private; the teaching team has access.</p>
+    <pre><code>mvn -B -q clean package -DskipTests
+java -jar courseweaver-server/target/courseweaver-server-0.1.0-SNAPSHOT.jar
+# then open http://localhost:8080/ , or use the CLI:
+scripts\hcw.cmd --course=FINA3353</code></pre>
+    <p>The backend loads the checked-in dataset at start-up and prints how many records it read, so
+    "which data am I looking at" is never a guess.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>HKU Course Weaver &middot; AILT9019 course project &middot; this page is documentation; the
+    system itself runs locally.</p>
+  </div>
+</footer>
+</body>
+</html>
