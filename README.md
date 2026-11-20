@@ -1,8 +1,13 @@
 # HKU Course Weaver - public project page
 
-A single static page that documents the project. It is published with GitHub Pages
-from the root of this repository; there is no build step and no external asset: open
-`index.html` and it renders.
+A single static Portal-style page that documents the project. It is published with
+GitHub Pages from the root of this repository; there is no build step and no runtime
+dependency. All images and styles are local, so opening `index.html` renders the page.
+
+The page follows the product's own HKU Portal-inspired frame: white top bar, pale
+workspace, side navigation, flat white cards, dark-green notice and green tiles. It
+reuses the project's About-the-project structure instead of maintaining a separate
+landing-page design.
 
 ## Publish
 
@@ -13,6 +18,13 @@ from the root of this repository; there is no build step and no external asset: 
 ## Update
 
 Edit `index.html` / `styles.css` and push to `main`. Nothing else is needed.
+
+Local preview assets:
+
+- `assets/hku-course-weaver-logo.png` - project wordmark
+- `assets/course-info-preview.png` - current English Course Info view
+- `assets/plan-preview.png` - current English My Plan view
+- `assets/pipeline.svg` - bounded pipeline diagram
 
 ## What must not end up here
 

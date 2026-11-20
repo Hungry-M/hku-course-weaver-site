@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 260" role="img"
+     aria-label="Public course data and the student's own declarations feed a deterministic constraint check; the result is either an explained plan or a refusal.">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7"
+            orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6b7280"/>
+    </marker>
+  </defs>
+  <rect width="820" height="260" fill="#ffffff"/>
+
+  <rect x="24" y="30" width="200" height="66" rx="4" fill="#f3f8f4" stroke="#0a3500"/>
+  <text x="36" y="56" font-family="Segoe UI, sans-serif" font-size="13" fill="#0a3500" font-weight="600">Public course data</text>
+  <text x="36" y="76" font-family="Segoe UI, sans-serif" font-size="11.5" fill="#444b53">source URL + access date</text>
+
+  <rect x="24" y="150" width="200" height="66" rx="4" fill="#f3f8f4" stroke="#0a3500"/>
+  <text x="36" y="176" font-family="Segoe UI, sans-serif" font-size="13" fill="#0a3500" font-weight="600">Student's declarations</text>
+  <text x="36" y="196" font-family="Segoe UI, sans-serif" font-size="11.5" fill="#444b53">attempts, entry term, weights</text>
+
+  <line x1="224" y1="63" x2="292" y2="104" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="224" y1="183" x2="292" y2="142" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="300" y="86" width="196" height="74" rx="4" fill="#ffffff" stroke="#0a3500" stroke-width="1.5"/>
+  <text x="314" y="112" font-family="Segoe UI, sans-serif" font-size="13" fill="#0a3500" font-weight="600">Deterministic check</text>
+  <text x="314" y="131" font-family="Segoe UI, sans-serif" font-size="11.5" fill="#444b53">prerequisites · credits · terms</text>
+  <text x="314" y="148" font-family="Segoe UI, sans-serif" font-size="11.5" fill="#444b53">no model makes the decision</text>
+
+  <line x1="496" y1="110" x2="560" y2="72" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="496" y1="136" x2="560" y2="176" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="568" y="30" width="228" height="72" rx="4" fill="#ffffff" stroke="#2e7d32"/>
+  <text x="580" y="56" font-family="Segoe UI, sans-serif" font-size="13" fill="#2e7d32" font-weight="600">Explained plan</text>
+  <text x="580" y="76" font-family="Segoe UI, sans-serif" font-size="11.5" fill="#444b53">terms, credits, reasons for exclusions</text>
+
+  <rect x="568" y="150" width="228" height="72" rx="4" fill="#ffffff" stroke="#b3261e"/>
+  <text x="580" y="176" font-family="Segoe UI, sans-serif" font-size="13" fill="#b3261e" font-weight="600">Refusal</text>
+  <text x="580" y="196" font-family="Segoe UI, sans-serif" font-size="11.5" fill="#444b53">unknown course · contradictory term</text>
+</svg>

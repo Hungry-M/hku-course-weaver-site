@@ -1,144 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HKU Course Weaver</title>
-<meta name="description" content="Check whether a course plan is actually possible before you enrol: prerequisite chains, co-requisites, clashes and credit load, each traced to the public page it came from.">
-<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-<link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a3500">
+  <title>HKU Course Weaver — project overview</title>
+  <meta name="description" content="An auditable course-relationship and term-planning tool for HKU undergraduates. Course Info, Programme Info, My Plan and a data-source centre in one bounded pipeline.">
+  <meta property="og:title" content="HKU Course Weaver — project overview">
+  <meta property="og:description" content="See the prerequisite chain, the official wording, the term board and the evidence behind every course-planning answer.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hungry-m.github.io/hku-course-weaver-site/">
+  <meta property="og:image" content="https://hungry-m.github.io/hku-course-weaver-site/assets/course-info-preview.png">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header class="top">
-  <div class="wrap">
-    <a class="brand" href="./"><img src="assets/logo.svg" alt="" width="32" height="32">HKU Course Weaver</a>
-    <nav><a href="#does">What it does</a><a href="#refuses">What it refuses</a><a href="#data">Data</a><a href="#run">Run it</a></nav>
-  </div>
-</header>
-
-<main class="wrap">
-
-  <section class="hero">
-    <h1>Is this course plan actually possible?</h1>
-    <p class="lede">
-      You type the courses you want and the courses you have taken. HKU Course Weaver answers with
-      what is missing, what will clash, and which terms could work &mdash; and shows the public page
-      each rule came from, so you can check it yourself.
-    </p>
-    <p class="meta">
-      A course project for AILT9019 (AI Literacy II), University of Hong Kong. The working system is a
-      local Java service; this page documents it and the demo video shows it running.
-    </p>
-  </section>
-
-  <section id="does">
-    <h2>What it does</h2>
-    <div class="grid">
-      <article>
-        <h3>Follows the whole chain</h3>
-        <p>A prerequisite of a prerequisite still counts. The tool walks the graph both ways, so
-        "can I take FINA3353 next year" turns into the four courses that have to happen first.</p>
-      </article>
-      <article>
-        <h3>Distinguishes "cannot check" from "no problem"</h3>
-        <p>If a rule names a course outside the curated dataset, the answer says it cannot be
-        verified rather than silently passing it. Same for an in-progress course against a
-        minimum grade: the answer is an assumption, and it is labelled as one.</p>
-      </article>
-      <article>
-        <h3>Offers options without ranking them</h3>
-        <p>Feasible term-by-term plans are printed in chronological order. The ordering carries no
-        preference: choosing between them is the student's job, not the tool's.</p>
-      </article>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="HKU Course Weaver home">
+      <img src="assets/hku-course-weaver-logo.png" alt="HKU Course Weaver">
+    </a>
+    <span class="page-tag">Public project page</span>
+    <div class="topbar-right">
+      <span class="course-tag">AILT9019 · Team 35</span>
+      <a class="top-link" href="#links">Project links</a>
     </div>
+  </header>
 
-    <figure>
-      <img src="assets/app.png" alt="The input panel: course codes, self-reported records, and the declared programme length.">
-      <figcaption>Input panel. The name is the fixed sample used for screenshots; nothing is stored
-      in the browser.</figcaption>
-    </figure>
+  <div class="shell">
+    <aside class="side">
+      <h2>On this page</h2>
+      <nav aria-label="Page sections">
+        <a href="#overview">What we built</a>
+        <a href="#surfaces">Product surfaces</a>
+        <a href="#preview">What it looks like</a>
+        <a href="#pipeline">The pipeline</a>
+        <a href="#evidence">Evidence and limits</a>
+        <a href="#data">Data and privacy</a>
+        <a href="#run">Run it locally</a>
+        <a href="#ai">AI disclosure</a>
+        <a href="#links">Project links</a>
+      </nav>
+      <p class="side-note">
+        Independent student project for AILT9019. Not affiliated with, or endorsed by,
+        the University of Hong Kong.
+      </p>
+    </aside>
 
-    <p>Command-line output for the same question, with a refusal at the end:</p>
-    <pre><code>Course FINA3353 - Regulatory, operational and valuation issues in finance institutions (6.0 credits)
-  Prerequisites / dependency chain (upstream):
-    FINA2320 -&gt; FINA3353  [Investments and portfolio analysis; pass required]
+    <main class="stack">
+      <section class="card hero" id="overview">
+        <p class="eyebrow">HKU · AILT9019 AI Literacy II · student project</p>
+        <h1>Plan around the chain, not around the guess.</h1>
+        <p class="lede">
+          HKU Course Weaver turns public course information and a student's own declarations
+          into an auditable view of course relationships and a concrete-term study plan.
+          It shows the official wording, the source URL and the date the source was read.
+        </p>
+        <p class="hero-copy">
+          One primary user group: HKU undergraduates. One concrete task: can I take these
+          courses in the terms I have left, and what has to happen first? One bounded pipeline:
+          declared input in, explained plan or refusal out.
+        </p>
+        <div class="actions">
+          <a class="button" href="https://youtu.be/-hJEeITIujg" target="_blank" rel="noopener">Watch the demo</a>
+          <a class="button ghost" href="https://github.com/Hungry-M/HKU-Course-Weaver" target="_blank" rel="noopener">View the repository</a>
+          <a class="button ghost" href="#evidence">Read the evidence</a>
+        </div>
+        <p class="fine-print">
+          This page is static documentation. The working system is a Java service that runs
+          locally or in Docker; the videos show that system running.
+        </p>
+      </section>
 
-=== Constraint check ===
-  Blocked points:
-    FINA3353 needs FINA2320 [pass, verified=true] - no record of FINA2320; complete it before FINA3353
-  Soft warnings (non-blocking):
-    [LONG_CHAIN/soft] Long dependency chain of 4 courses (ACCT1101 -&gt; FINA1310 -&gt; FINA2320 -&gt; FINA3353) ...
-  Feasible options (ordering carries no preference):
-    Y1S1: ACCT1101, ECON1210
-    Y1S2: FINA1310
-    Y2S1: FINA2320
-    Y3S1: FINA3353</code></pre>
-  </section>
+      <section class="notice">
+        <h2>What it will not do</h2>
+        <p>
+          It gives no subjective course-selection advice, never ranks courses, never chooses
+          courses for you, never decides graduation eligibility, never resolves unrelated
+          credit conflicts and never makes an official academic decision. The student reports
+          their own record; the product does not read it from SIS.
+        </p>
+      </section>
 
-  <section id="refuses">
-    <h2>What it refuses to do</h2>
-    <p>These are product boundaries, not missing features:</p>
-    <ul class="checks">
-      <li>No recommendation of which course to take, and no ranking of courses.</li>
-      <li>No decision about whether you can graduate, and no official academic decision of any kind.</li>
-      <li>No comparison of unrelated or parallel courses for credit or timetable conflicts.</li>
-      <li>No SIS or Portal login, and no reading of personal academic records. What you type is all it knows.</li>
-      <li>No personal data sent to a model: the optional language-model parser sees public course text only.</li>
-      <li>Wording follows the evidence: "extremely high risk of delay", never "you will be delayed".</li>
-    </ul>
-  </section>
+      <section class="card" id="surfaces">
+        <h2>Four connected surfaces, one dataset</h2>
+        <div class="tiles">
+          <article class="tile">
+            <span class="tile-number">01</span>
+            <h3>Course Info</h3>
+            <p>
+              One course dossier: prerequisite and co-requisite tree, mutex set, eligibility
+              notes, official wording and provenance. A prerequisite the dataset cannot express
+              stays visible as an unverified clause instead of silently passing.
+            </p>
+          </article>
+          <article class="tile">
+            <span class="tile-number">02</span>
+            <h3>Programme Info</h3>
+            <p>
+              Requirements and the printed sample study plan, kept read-only and linked to the
+              official regulation. Comparing a plan never overwrites the student's own plan.
+            </p>
+          </article>
+          <article class="tile">
+            <span class="tile-number">03</span>
+            <h3>My Plan</h3>
+            <p>
+              Attempts placed on real academic years and terms, not floating relative labels.
+              The board re-checks chains, credit load, timetable clashes where public data
+              exists, and the weighted one-year wishlist.
+            </p>
+          </article>
+          <article class="tile">
+            <span class="tile-number">04</span>
+            <h3>Data Centre</h3>
+            <p>
+              Ordered local and cloud sources, session overrides, encrypted profile import and
+              an AI console that prepares a user-supplied model to research public course
+              information without seeing personal records.
+            </p>
+          </article>
+        </div>
+        <p class="muted">
+          Accounts, the local encrypted profile and the trilingual interface are shared by
+          all four surfaces. The interface is available in English, Traditional Chinese and
+          Simplified Chinese.
+        </p>
+      </section>
 
-  <section id="data">
-    <h2>Where the data comes from</h2>
-    <p>Every record carries the public URL it was read from and the date it was read; the repository
-    ships that manifest, so a reviewer can re-open the page and compare. Nothing here is scraped from
-    a source that requires permission.</p>
-    <div class="table">
-      <table>
-        <thead><tr><th>What</th><th>Public source</th></tr></thead>
-        <tbody>
-          <tr><td>Course descriptions, prerequisites, co-requisites, exclusions</td><td>Faculty of Business and Economics course descriptions 2026-27 (PDF); Faculty of Science course pages</td></tr>
-          <tr><td>Class times and sections</td><td>Faculty of Engineering BEng Year-1 timetable (PDF, 2023-24) &mdash; the only public document found that prints class letters</td></tr>
-          <tr><td>Programme requirements</td><td>BEng in Mechanical Engineering syllabus 2025-26 (PDF)</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
+      <section class="card" id="preview">
+        <h2>What it looks like</h2>
+        <figure class="shot">
+          <a href="assets/course-info-preview.png?v=2" target="_blank" rel="noopener">
+            <img src="assets/course-info-preview.png?v=2" alt="Course Info for FINA2322 showing the prerequisite tree, mutex courses, eligibility rules and official wording.">
+          </a>
+          <figcaption>
+            FINA2322: the dependency forest, the declared restriction labels, the original SIS
+            wording and the source line on one page. The graph shows prerequisite and
+            co-requisite edges; eligibility conditions remain labelled text, not invented arrows.
+          </figcaption>
+        </figure>
+        <figure class="shot compact">
+          <a href="assets/plan-preview.png?v=2" target="_blank" rel="noopener">
+            <img src="assets/plan-preview.png?v=2" alt="My Plan showing courses on concrete academic terms with passed, in-progress and planned states.">
+          </a>
+          <figcaption>
+            My Plan uses real academic terms and keeps passed, in-progress and planned states
+            distinct. The relative Y#S# label sits next to the calendar label, never instead of it.
+          </figcaption>
+        </figure>
+      </section>
 
-  <section id="limits">
-    <h2>What is not finished</h2>
-    <ul class="checks">
-      <li><strong>73 courses</strong>, not the whole catalogue: a curated subset covering common FBE,
-      Science and Engineering courses.</li>
-      <li><strong>The timetable is 2023-24.</strong> Class times for 2026-27 are not published in a form
-      that names sections, so the page says which year it is looking at.</li>
-      <li><strong>Twelve courses are withheld.</strong> Their printed prerequisite mixes "and", "or" and
-      "or equivalent" in a way the data model cannot state exactly; shipping them would over-claim.</li>
-      <li><strong>One programme</strong> (BEng in Mechanical Engineering). Its elective lists are
-      alternatives, so most of its course slots do not resolve to a catalogue record yet.</li>
-      <li>Summer-term and exchange-student section codes are not modelled: no public page shows one,
-      and the tool says so instead of guessing.</li>
-    </ul>
-  </section>
+      <section class="card" id="pipeline">
+        <h2>The bounded pipeline</h2>
+        <img class="diagram" src="assets/pipeline.svg" alt="Public course data and student declarations enter a deterministic constraint check; the result is an explained plan or a refusal.">
+        <div class="pipeline-grid">
+          <div>
+            <h3>Input</h3>
+            <p>Course codes, the student's declared attempts, entry term, programme and optional wishlist weights.</p>
+          </div>
+          <div>
+            <h3>Processing</h3>
+            <p>Deterministic checks for prerequisites, co-requisites, mutex restrictions, eligibility wording, credits and terms.</p>
+          </div>
+          <div>
+            <h3>Output</h3>
+            <p>An explained relation view, a concrete-term plan, a refusal, or a neutral set of feasible options with the reasons attached.</p>
+          </div>
+        </div>
+        <p class="muted">
+          The language model, when configured, only extracts requirement text from public
+          sources. Scheduling, credit arithmetic and every verdict remain deterministic code,
+          so the same input gives the same answer.
+        </p>
+      </section>
 
-  <section id="run">
-    <h2>Run it yourself</h2>
-    <p>Java 21 or newer and Maven. The repository is private; the teaching team has access.</p>
-    <pre><code>mvn -B -q clean package -DskipTests
+      <section class="card" id="evidence">
+        <h2>Evidence snapshot</h2>
+        <div class="stat-grid">
+          <div class="stat"><strong>555</strong><span>tests passing</span><small>0 failures · 3 live-model tests skipped by design</small></div>
+          <div class="stat"><strong>108</strong><span>demo records</span><small>95 official HTTPS sources + 13 labelled synthetic edge-case fixtures</small></div>
+          <div class="stat"><strong>73</strong><span>production records</span><small>curated, with source URL and access date</small></div>
+          <div class="stat"><strong>3</strong><span>programme views</span><small>189 of 191 required slots renderable</small></div>
+          <div class="stat"><strong>17</strong><span>timetable offerings</span><small>2023-24 public data only</small></div>
+          <div class="stat"><strong>0</strong><span>placeholder provenance</span><small>every displayed record names its source</small></div>
+        </div>
+        <h3>What is working</h3>
+        <ul class="checks">
+          <li>Course profiles, prerequisite bundles, co-requisites, mutex sets, eligibility labels and official raw wording.</li>
+          <li>Programme requirements and printed sample plans without overwriting the student's plan.</li>
+          <li>Concrete-term board, one-year weighted wishlist solver, source priority and fallback.</li>
+          <li>School-email accounts, local encrypted profiles and a trilingual interface.</li>
+        </ul>
+        <h3>Known limits, stated in the product too</h3>
+        <ul class="checks limits">
+          <li>Timetable data exists for 2023-24 only. Any other year reports <b>not checked</b>, never "no clash".</li>
+          <li>Programme coverage is three programme views; two required slots are not in the course dataset.</li>
+          <li>Real verification email and HKU SSO are not connected yet. The development mailbox is used locally.</li>
+          <li>SIS access is not implemented and requires HKU ITS approval; the product uses public or self-curated data only.</li>
+          <li>The optimiser covers one academic year at a time and cannot see class times. It does not claim a four-year schedule.</li>
+        </ul>
+      </section>
+
+      <section class="card" id="data">
+        <h2>Data, privacy and platform boundaries</h2>
+        <ul class="list">
+          <li class="info">
+            Every course record carries a <code>source_url</code> and an <code>accessed_date</code>.
+            If two sources disagree, the newer version wins; at equal freshness, a declared
+            authority breaks the tie; otherwise ingestion stops for a human.
+          </li>
+          <li class="good">
+            The working app can read an encrypted local profile file sealed with Argon2id and
+            AES-256-GCM, or a plain JSON file that the user chooses to import. The choice and
+            its trade-off are exposed in the interface.
+          </li>
+          <li class="info">
+            A signed-in student sees the same source order and can temporarily override it for
+            a page or session. The selected source is promoted; the remaining sources stay as
+            fallback rather than disappearing.
+          </li>
+          <li class="warning">
+            No personal academic record is sent to a model. The AI console is for public-source
+            research and uses a key the user configures; it is disabled for guests.
+          </li>
+        </ul>
+      </section>
+
+      <section class="card" id="run">
+        <h2>Run it locally</h2>
+        <p>
+          Requirements: Java 21+ and Maven. There is no npm build, no hosted account database
+          and no SIS credential. The repository README contains the full setup, test and
+          troubleshooting instructions.
+        </p>
+        <pre><code>mvn -B clean verify
 java -jar courseweaver-server/target/courseweaver-server-0.1.0-SNAPSHOT.jar
-# then open http://localhost:8080/ , or use the CLI:
-scripts\hcw.cmd --course=FINA3353</code></pre>
-    <p>The backend loads the checked-in dataset at start-up and prints how many records it read, so
-    "which data am I looking at" is never a guess.</p>
-  </section>
+# open http://localhost:8080/</code></pre>
+        <ol class="steps">
+          <li>Build and run the server; the site is served from the same origin.</li>
+          <li>Sign in with an allowed university email suffix or import a local encrypted profile.</li>
+          <li>Open Course Info, search a course code, then open My Plan to place attempts on real terms.</li>
+          <li>Use the Data Centre to inspect source order, import a local catalogue or configure the optional AI console.</li>
+        </ol>
+        <p class="muted">
+          The repository is restricted to the course teaching team. This public page and the
+          two videos are the public evidence available without repository access.
+        </p>
+      </section>
 
-</main>
+      <section class="card" id="ai">
+        <h2>AI-use disclosure</h2>
+        <p>
+          AI coding agents supported implementation, test writing, translation drafting and
+          audit passes. A human remained accountable: every change was reviewed, the full test
+          suite was run before submission, and claims in the report were checked against code,
+          data and the running interface. The product itself is not a multi-agent system; the
+          optional model call is bounded to extracting public requirement text.
+        </p>
+      </section>
 
-<footer>
-  <div class="wrap">
-    <p>HKU Course Weaver &middot; AILT9019 course project &middot; this page is documentation; the
-    system itself runs locally.</p>
+      <section class="card" id="links">
+        <h2>Project links</h2>
+        <table class="links">
+          <tr><th>Public page</th><td><a href="https://hungry-m.github.io/hku-course-weaver-site/">hungry-m.github.io/hku-course-weaver-site</a></td></tr>
+          <tr><th>Repository</th><td><a href="https://github.com/Hungry-M/HKU-Course-Weaver">github.com/Hungry-M/HKU-Course-Weaver</a> <span class="small-note">(private to the teaching team)</span></td></tr>
+          <tr><th>Presentation</th><td><a href="https://youtu.be/6d0mygnQH7E">youtu.be/6d0mygnQH7E</a></td></tr>
+          <tr><th>Demo</th><td><a href="https://youtu.be/-hJEeITIujg">youtu.be/-hJEeITIujg</a></td></tr>
+        </table>
+      </section>
+    </main>
   </div>
-</footer>
+
+  <footer class="site-footer">
+    <p>
+      Independent student project for AILT9019 at the University of Hong Kong. Not affiliated
+      with, or endorsed by, HKU. Course data is public or self-curated and every record names
+      its source; SIS and the student's academic advisor remain authoritative.
+    </p>
+  </footer>
 </body>
 </html>
